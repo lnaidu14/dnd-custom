@@ -1,0 +1,218 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.campaignInfo h1 {
+  margin: 0;
+  color: var(--text);
+}
+
+.sessionBadge {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+  background: var(--primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.campaignDescription {
+  margin: 0.25rem 0 0 0;
+  color: var(--text-secondary, #999);
+}
+
+.sessionInfo {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #999);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.playerCount {
+  background: var(--surface);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+}
+
+.dmOnline {
+  background: var(--primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.addCharacterButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.backButton {
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background: transparent;
+}
+
+.main {
+  display: flex;
+  gap: 1rem;
+  height: calc(100vh - 4rem);
+  flex: 1;
+}
+
+.roleIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.content {
+  flex: 1;
+}
+
+.sidebar {
+  width: 300px;
+}
+
+.tabNavigation {
+  margin-bottom: 1rem;
+}
+
+.tabContainer {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  text-transform: capitalize;
+  background: transparent;
+  color: var(--text);
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  background: var(--primary);
+  color: white;
+  border-bottom: 2px solid var(--primary);
+}
+
+.characterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.characterCard {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background: var(--surface);
+  transition: all 0.2s ease;
+}
+
+.characterCard.selected {
+  border: 2px solid var(--primary);
+}
+
+.characterCardContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.characterAvatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.characterInitial {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.characterDetails {
+  flex: 1;
+}
+
+.characterName {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.characterInfo {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.characterType {
+  font-size: 0.7rem;
+}
+
+.playerBadge {
+  background: var(--accent);
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+}
+
+.npcBadge {
+  background: var(--primary);
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}

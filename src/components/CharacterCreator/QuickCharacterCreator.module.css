@@ -1,0 +1,374 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topIconPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.closeButton {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: var(--danger);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: var(--danger-hover, #b91c1c);
+}
+
+.characterTypeTabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--text);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: var(--surface-hover);
+}
+
+.activeTab {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.basicInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-weight: bold;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.field input,
+.field select {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--background);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.stats {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.stats h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.statField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statField label {
+  font-weight: bold;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.statField input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--surface);
+  color: var(--text);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.combat {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.combat h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.combatGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.createButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.createButton:hover {
+  background: var(--primary-hover);
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--surface-hover);
+}
+
+/* AI Section */
+.aiSection {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.aiSection h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.aiInput {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.aiInput input {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.aiInput input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.generateButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.generateButton:hover:not(:disabled) {
+  background: var(--primary-hover, #3730a3);
+}
+
+.generateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Import Section */
+.importSection {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.importSection h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.importOptions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.importButton {
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.importButton:hover {
+  background: var(--accent-hover, #9333ea);
+}
+
+.textImport {
+  margin-top: 0.5rem;
+}
+
+.textImport textarea {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  color: var(--text);
+  font-size: 0.8rem;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+
+.textImport textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.processButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+}
+
+.processButton:hover {
+  background: var(--primary-hover, #3730a3);
+}
+

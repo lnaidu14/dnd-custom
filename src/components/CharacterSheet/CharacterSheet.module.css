@@ -1,0 +1,317 @@
+.container {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  max-width: 600px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--text);
+}
+
+.basicInfo {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.editButton:hover {
+  background: var(--primary-hover);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section {
+  background: var(--background);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.section h3 {
+  margin: 0 0 1rem 0;
+  color: var(--text);
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+/* Ability Scores */
+.abilityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.abilityScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 0.5rem;
+  border: 2px solid var(--border);
+}
+
+.abilityScore label {
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.scoreDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.modifier {
+  font-size: 1rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.statInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--background);
+  color: var(--text);
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Skills */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.skill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+}
+
+.skillLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.proficiencyCheckbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primary);
+}
+
+.skillName {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.skillAbility {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.skillModifier {
+  font-weight: bold;
+  color: var(--primary);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* Combat Stats */
+.combatStats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.combatStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.combatStat label {
+  font-weight: bold;
+  color: var(--text);
+}
+
+.statValue {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary);
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.hpInputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hpInputs input {
+  flex: 1;
+}
+
+/* Saving Throws */
+.savingThrows {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.savingThrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+}
+
+.savingThrowLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.savingThrowModifier {
+  font-weight: bold;
+  color: var(--primary);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* Equipment */
+.equipment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.equipmentSlot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+}
+
+.equipmentSlot label {
+  font-weight: bold;
+  color: var(--text);
+}
+
+.equipmentItem {
+  color: var(--text-secondary);
+}
+
+/* Edit Actions */
+.editActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.saveButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.saveButton:hover {
+  background: var(--primary-hover);
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--surface-hover);
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.empty h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+}
+
+.empty p {
+  margin: 0;
+}
+

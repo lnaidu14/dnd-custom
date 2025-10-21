@@ -1,0 +1,146 @@
+.container {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.description {
+  color: var(--text-secondary, #666);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.sceneGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sceneCard {
+  background: var(--background);
+  border: 2px solid var(--border, #e5e5e5);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.sceneCard:hover {
+  border-color: var(--primary);
+  background: var(--surface-hover, #f0f0f0);
+}
+
+.sceneCard.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.sceneIcons {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.sceneCard h4 {
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.sceneCard p {
+  margin: 0;
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.sceneCard.active p {
+  opacity: 1;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.clearButton {
+  padding: 0.5rem 1rem;
+  background: var(--accent, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+}
+
+.clearButton:hover {
+  background: var(--accent-hover, #9333ea);
+}
+
+.customScene {
+  margin-bottom: 1rem;
+}
+
+.customScene h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.customInput {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.customInput input {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--background);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: 0.25rem;
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.customInput input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.generateButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.generateButton:hover:not(:disabled) {
+  background: var(--primary-hover, #3730a3);
+}
+
+.generateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.currentScene {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: var(--background);
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #666);
+}

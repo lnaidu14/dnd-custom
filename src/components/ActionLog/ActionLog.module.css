@@ -1,0 +1,53 @@
+.container {
+  background: var(--surface);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text);
+}
+
+.log {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-left: 3px solid var(--event-color);
+  margin-bottom: 0.5rem;
+  background: var(--surface-secondary);
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease;
+}
+
+.icon {
+  font-size: 1.2em;
+}
+
+.time {
+  color: var(--text-secondary);
+  font-size: 0.8em;
+}
+
+.message {
+  margin: 0;
+  color: var(--text);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,387 @@
+.container {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  max-width: 800px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.generateButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.generateButton:hover {
+  background: var(--primary-hover);
+}
+
+.generateButton:disabled {
+  background: var(--text-secondary);
+  cursor: not-allowed;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* Equipment Grid */
+.equipmentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.equipmentSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.slotLabel {
+  font-weight: bold;
+  color: var(--text);
+  text-transform: capitalize;
+  font-size: 0.9rem;
+}
+
+.equippedItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--background);
+  border: 2px solid;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.equippedItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.itemIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.itemName {
+  font-weight: bold;
+  color: var(--text);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.unequipButton {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: var(--danger);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptySlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--background);
+  border: 2px dashed var(--border);
+  border-radius: 0.5rem;
+  min-height: 80px;
+}
+
+.emptyText {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Inventory Grid */
+.inventoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.inventoryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--background);
+  border: 2px solid;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.inventoryItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.itemRarity {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.equipButton {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.equipButton:hover {
+  background: var(--primary-hover);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.closeButton {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: var(--danger);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: var(--danger-hover);
+}
+
+/* Item Details */
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemType {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.itemDescription {
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.itemStats {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.itemStats h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.statLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.statName {
+  color: var(--text-secondary);
+}
+
+.statValue {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.itemEffects {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.itemEffects h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.effect {
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.effect::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* Generator */
+.generatorContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.generatorContent p {
+  margin: 0;
+  color: var(--text);
+}
+
+.promptInput {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--background);
+  color: var(--text);
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.promptInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.generatorActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  padding: 0.5rem 1rem;
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--surface-hover);
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.empty h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+}
+
+.empty p {
+  margin: 0;
+}
+

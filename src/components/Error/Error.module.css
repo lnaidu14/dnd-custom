@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--surface);
+  border-radius: 0.5rem;
+  border: 2px solid #ef4444;
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ef4444;
+}
+
+.message {
+  color: var(--text);
+  text-align: center;
+  font-size: 1.125rem;
+  margin: 0;
+}

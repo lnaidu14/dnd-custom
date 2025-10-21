@@ -1,0 +1,330 @@
+.container {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  max-width: 400px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.addButton:hover {
+  background: var(--primary-hover);
+}
+
+/* Object List */
+.objectList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.objectItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.objectItem:hover {
+  background: var(--surface-hover);
+  transform: translateX(2px);
+}
+
+.objectIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.objectInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.objectName {
+  font-weight: bold;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.objectPosition {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.removeButton {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: var(--danger);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.objectItem:hover .removeButton {
+  opacity: 1;
+}
+
+.removeButton:hover {
+  background: var(--danger-hover);
+}
+
+/* Add Menu */
+.addMenu {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.addMenu h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.objectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.objectTypeButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.objectTypeButton:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+}
+
+.objectTypeButton .objectIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.objectTypeButton .objectLabel {
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.cancelButton {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--surface-hover);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: var(--surface);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.closeButton {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: var(--danger);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: var(--danger-hover);
+}
+
+/* Object Details */
+.objectDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.objectDescription {
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+.objectProperties {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.objectProperties h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.propertyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.property {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.propertyLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.propertyValue {
+  color: var(--text);
+  font-weight: bold;
+}
+
+/* Interactions */
+.interactions {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.interactions h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.interactionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.interactionButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.interactionButton:hover {
+  background: var(--primary-hover);
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.empty p {
+  margin: 0.5rem 0;
+}
+

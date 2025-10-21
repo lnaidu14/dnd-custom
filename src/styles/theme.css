@@ -1,0 +1,35 @@
+:root {
+  /* Light theme */
+  --primary-light: #4a90e2;
+  --background-light: #ffffff;
+  --text-light: #2c3e50;
+  --border-light: #e2e8f0;
+  
+  /* Dark theme */
+  --primary-dark: #61dafb;
+  --background-dark: #1a202c;
+  --text-dark: #f7fafc;
+  --border-dark: #2d3748;
+  
+  /* Game-specific colors */
+  --health: #ef4444;
+  --mana: #3b82f6;
+  --experience: #8b5cf6;
+  
+  /* Animation durations */
+  --transition-speed: 0.2s;
+}
+
+[data-theme='light'] {
+  --primary: var(--primary-light);
+  --background: var(--background-light);
+  --text: var(--text-light);
+  --border: var(--border-light);
+}
+
+[data-theme='dark'] {
+  --primary: var(--primary-dark);
+  --background: var(--background-dark);
+  --text: var(--text-dark);
+  --border: var(--border-dark);
+}
