@@ -13,37 +13,15 @@ const generateUUID = () => {
 };
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    // Create campaign
-    const { name, description } = req.body;
-
-    if (!name) {
-      return res.status(400).json({ error: 'Campaign name is required' });
-    }
-
+  if (req.method === 'GET') {
     try {
       const db = await initDatabase();
-      const campaignId = generateUUID();
-      const now = new Date().toISOString();
-
-      await db.run(
-        `INSERT INTO campaigns (id, name, description, dm_id, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-        [campaignId, name, description || '', 'current_user', now, now]
-      );
 
       await db.close();
 
       res.status(200).json({
         success: true,
-        campaign: {
-          id: campaignId,
-          name,
-          description: description || '',
-          dm_id: 'current_user',
-          created_at: now,
-          updated_at: now
-        }
+        message: "Database initialized"
       });
     } catch (error) {
       console.error('Campaign creation failed:', error);

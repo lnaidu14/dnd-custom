@@ -403,9 +403,6 @@ export default function Session({
             />
           </ErrorBoundary>
         )}
-
-        {/* Music Player - Always available */}
-        <MusicPlayer currentScene={currentScene} isDM={isDM} />
       </div>
     </>
   );

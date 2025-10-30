@@ -21,6 +21,7 @@ export default function Home() {
   });
   const [currentScene, setCurrentScene] = useState("Empty Scene");
   const [lastSyncTime, setLastSyncTime] = useState(Date.now());
+  const [currentUser, setCurrentUser] = useState(null); // Track current user for session management
 
   // Initialize services
   const aiService = new LocalAIService();
@@ -67,6 +68,29 @@ export default function Home() {
     const interval = setInterval(syncCampaignState, 2000); // Poll every 2 seconds
     return () => clearInterval(interval);
   }, [campaign.id, showHomeScreen, lastSyncTime]);
+
+  // Handle browser close/refresh - leave session
+  useEffect(() => {
+    const handleBeforeUnload = async (event) => {
+      if (campaign.id && currentUser) {
+        // Use navigator.sendBeacon for reliable cleanup on page unload
+        const data = JSON.stringify({
+          action: "leave",
+          userId: currentUser.userId,
+          role: currentUser.role,
+          userName: currentUser.userName,
+        });
+
+        navigator.sendBeacon(
+          `/api/campaigns/${campaign.id}/session`,
+          new Blob([data], { type: "application/json" })
+        );
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [campaign.id, currentUser]);
 
   // Initialize database via API
   useEffect(() => {
@@ -145,21 +169,34 @@ export default function Home() {
   // Session management functions
   const updateSessionInfo = async (campaignId, userRole) => {
     try {
+      const userId = `user_${Date.now()}_${Math.random()
+        .toString(36)
+        .substr(2, 5)}`;
+      const userName = userRole === "dm" ? "Dungeon Master" : "Player";
+
       const response = await fetch(`/api/campaigns/${campaignId}/session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "join",
           role: userRole,
-          userId: `user_${Date.now()}_${Math.random()
-            .toString(36)
-            .substr(2, 5)}`,
+          userId: userId,
+          userName: userName,
         }),
       });
 
+      console.log("session response: ", sessionInfo);
       if (response.ok) {
         const sessionData = await response.json();
         setSessionInfo(sessionData);
+
+        // Store current user info for later use (leaving session)
+        setCurrentUser({
+          userId: userId,
+          userName: userName,
+          role: userRole,
+        });
+
         return sessionData;
       }
     } catch (error) {
@@ -169,12 +206,26 @@ export default function Home() {
   };
 
   const leaveSession = async (campaignId) => {
+    if (!currentUser) {
+      console.warn("No current user info available for leaving session");
+      return;
+    }
+
     try {
       await fetch(`/api/campaigns/${campaignId}/session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "leave" }),
+        body: JSON.stringify({
+          action: "leave",
+          userId: currentUser.userId,
+          role: currentUser.role,
+          userName: currentUser.userName,
+        }),
       });
+
+      // Clear current user info after leaving
+      setCurrentUser(null);
+      console.log("Successfully left session");
     } catch (error) {
       console.error("Failed to leave session:", error);
     }
@@ -247,6 +298,7 @@ export default function Home() {
         setIsDM(true);
 
         // Update session info for DM
+        console.log("Creating session for new campaign:", result.campaign.id);
         await updateSessionInfo(result.campaign.id, "dm");
 
         console.log("Campaign created:", result.campaign);
@@ -267,16 +319,14 @@ export default function Home() {
       return;
     }
 
-    if (!campaignId) {
-      // Ask for campaign name to join as player
-      const campaignName = prompt("Enter the campaign name to join:");
-      if (!campaignName) return;
+    if (asPlayer) {
+      console.info("Joining as player");
 
       try {
         const response = await fetch("/api/campaigns/join", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ campaignName }),
+          body: JSON.stringify({ campaignId }),
         });
 
         const result = await response.json();
@@ -299,6 +349,14 @@ export default function Home() {
         const campaignData = result.campaign;
         console.log("campaignData: ", result);
 
+        // Check session info and join as player
+        const sessionData = await updateSessionInfo(campaignData.id, "player");
+        console.log("sessionData: ", sessionData);
+        if (sessionData && !sessionData.dmPresent) {
+          alert(sessionData.message);
+          return;
+        }
+
         // Set as current campaign with full game state
         const fullCampaignState = {
           id: campaignData.id,
@@ -315,14 +373,6 @@ export default function Home() {
 
         setShowHomeScreen(false);
         setIsDM(false); // Always false when joining by name (players)
-
-        // Check session info and join as player
-        const sessionData = await updateSessionInfo(campaignData.id, "player");
-        if (sessionData && sessionData.dmPresent === false) {
-          alert(
-            "No DM is currently in this session. You may need to wait for the DM to join."
-          );
-        }
 
         // Auto-select player character if available
         setTimeout(() => {
@@ -365,6 +415,14 @@ export default function Home() {
       }
 
       const campaignData = result.campaign;
+
+      const sessionData = await updateSessionInfo(campaignData.id, "dm");
+      console.info("sessionData: ", sessionData);
+
+      if (sessionData && sessionData.dmPresent) {
+        alert(sessionData.message);
+        return;
+      }
 
       // Set as current campaign
       setCampaign((prev) => ({
@@ -423,7 +481,6 @@ export default function Home() {
       environmentalObjects: [],
     });
     setSelectedCharacter(null);
-    setActiveTab("board");
     setSessionInfo({
       playerCount: 0,
       dmPresent: false,

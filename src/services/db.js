@@ -2,9 +2,9 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 
 export async function initDatabase() {
-  const db = await open({
-    filename: './data/campaign_data.db',
-    driver: sqlite3.Database
+  let db = await open({
+    filename: "./data/campaign_data.db",
+    driver: sqlite3.Database,
   });
 
   await db.exec(`
@@ -37,6 +37,18 @@ export async function initDatabase() {
       FOREIGN KEY(campaign_id) REFERENCES campaigns(id)
     );
 
+    CREATE TABLE IF NOT EXISTS sessions (
+      id TEXT PRIMARY KEY,
+      campaign_id TEXT NOT NULL,
+      dm_user_id TEXT,
+      dm_name TEXT,
+      player_count INTEGER DEFAULT 0,
+      connected_users TEXT DEFAULT '[]',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (campaign_id) REFERENCES campaigns(id)
+    );
+
     CREATE TABLE IF NOT EXISTS assets (
       id TEXT PRIMARY KEY,
       type TEXT NOT NULL,
@@ -57,31 +69,39 @@ export async function saveCampaignState(campaignId, state) {
   `, [Date.now().toString() + Math.random().toString(36), campaignId, JSON.stringify(state)]);
 }
 
-export class SessionManager {
-  constructor() {
-    this.db = null;
-  }
+// Session management functions
+export async function getSession(campaignId) {
+  const db = await initDatabase();
+  const session = await db.get(
+    'SELECT * FROM sessions WHERE campaign_id = ?',
+    [campaignId]
+  );
+  await db.close();
+  return session;
+}
 
-  async init() {
-    this.db = await open({
-      filename: './sessions.db',
-      driver: sqlite3.Database
-    });
+export async function createOrUpdateSession(campaignId, sessionData) {
+  const db = await initDatabase();
+  const { dm_user_id, dm_name, player_count, connected_users } = sessionData;
+  
+  await db.run(`
+    INSERT OR REPLACE INTO sessions 
+    (id, campaign_id, dm_user_id, dm_name, player_count, connected_users, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
+  `, [
+    campaignId, // Use campaign_id as session id for simplicity
+    campaignId,
+    dm_user_id,
+    dm_name,
+    player_count,
+    JSON.stringify(connected_users)
+  ]);
+  
+  await db.close();
+}
 
-    await this.db.exec(`
-      CREATE TABLE IF NOT EXISTS sessions (
-        id TEXT PRIMARY KEY,
-        campaign_id TEXT,
-        state JSON,
-        last_updated TIMESTAMP
-      )
-    `);
-  }
-
-  async saveSession(sessionId, state) {
-    await this.db.run(
-      'INSERT OR REPLACE INTO sessions (id, state, last_updated) VALUES (?, ?, ?)',
-      [sessionId, JSON.stringify(state), new Date().toISOString()]
-    );
-  }
+export async function deleteSession(campaignId) {
+  const db = await initDatabase();
+  await db.run('DELETE FROM sessions WHERE campaign_id = ?', [campaignId]);
+  await db.close();
 }

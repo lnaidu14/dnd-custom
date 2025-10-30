@@ -19,6 +19,7 @@ export { default as Inventory } from './Inventory/Inventory';
 export { default as JoinCampaign } from './JoinCampaign/JoinCampaign';
 export { default as Loading } from './LoadingSpinner/LoadingSpinner';
 export { default as PlayerActions } from './PlayerActions/PlayerActions';
+export { default as Session } from "./Session/Session";
 export { default as StoryPanel } from './StoryPanel/StoryPanel';
 export { default as Token } from './Token/Token';
 export { default as WorldBuilder } from './WorldBuilder/WorldBuilder';

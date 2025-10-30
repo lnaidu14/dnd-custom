@@ -5,10 +5,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { campaignName } = req.body;
+  const { campaignId } = req.body;
 
-  if (!campaignName) {
-    return res.status(400).json({ error: 'Campaign name is required' });
+  if (!campaignId) {
+    return res.status(400).json({ error: "Campaign ID is required" });
   }
 
   try {
@@ -16,8 +16,8 @@ export default async function handler(req, res) {
     
     // Find campaign by name (case-insensitive)
     const campaign = await db.get(
-      'SELECT * FROM campaigns WHERE LOWER(name) = LOWER(?)',
-      [campaignName]
+      "SELECT * FROM campaigns WHERE LOWER(id) = LOWER(?)",
+      [campaignId]
     );
 
     if (!campaign) {
@@ -25,10 +25,10 @@ export default async function handler(req, res) {
       const allCampaigns = await db.all('SELECT name FROM campaigns ORDER BY created_at DESC');
       await db.close();
       
-      return res.status(404).json({ 
-        error: 'Campaign not found',
-        message: `No campaign found with name "${campaignName}"`,
-        availableCampaigns: allCampaigns.map(c => c.name)
+      return res.status(404).json({
+        error: "Campaign not found",
+        message: `No campaign found with name`,
+        availableCampaigns: allCampaigns.map((c) => c.name),
       });
     }
 

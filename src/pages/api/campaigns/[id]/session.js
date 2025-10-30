@@ -1,83 +1,153 @@
-// Simple in-memory session tracking (in production, use Redis or database)
-const sessions = new Map();
+import {
+  getSession,
+  createOrUpdateSession,
+  deleteSession,
+} from "../../../../services/db";
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   const { id: campaignId } = req.query;
-  const { action, role, userId } = req.body;
+
+  // Handle both regular POST and sendBeacon requests
+  let requestBody;
+  if (req.body && typeof req.body === "string") {
+    // sendBeacon sends data as string
+    try {
+      requestBody = JSON.parse(req.body);
+    } catch (e) {
+      requestBody = req.body;
+    }
+  } else {
+    requestBody = req.body;
+  }
+
+  const { action, role, userId, userName } = requestBody;
 
   if (!campaignId) {
-    return res.status(400).json({ error: 'Campaign ID required' });
+    return res.status(400).json({ error: "Campaign ID required" });
   }
 
-  // Initialize session if it doesn't exist
-  if (!sessions.has(campaignId)) {
-    sessions.set(campaignId, {
-      playerCount: 0,
-      dmPresent: false,
-      connectedUsers: [],
-      dmUserId: null
-    });
+  if (!action || !role || !userId) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: action, role, userId" });
   }
-
-  const session = sessions.get(campaignId);
 
   try {
-    if (action === 'join') {
-      if (role === 'dm') {
+    // Get current session from database
+    let currentSession = await getSession(campaignId);
+    console.log("currentSession: ", currentSession);
+    let connectedUsers = currentSession
+      ? JSON.parse(currentSession.connected_users || "[]")
+      : [];
+    let dmUserId = currentSession?.dm_user_id || null;
+    let dmName = currentSession?.dm_name || null;
+
+    if (action === "join") {
+      if (role === "dm") {
         // Check if DM already exists
-        if (session.dmPresent) {
-          return res.status(409).json({ 
-            error: 'A DM is already in this session',
-            sessionInfo: session
+        if (dmUserId && dmUserId !== userId) {
+          return res.status(200).json({
+            message: "A DM is already in this session",
+            dmName: dmName,
+            dmPresent: true,
           });
         }
-        
-        session.dmPresent = true;
-        session.dmUserId = userId;
-        session.connectedUsers.push({ userId, role: 'dm', joinedAt: new Date() });
-      } else if (role === 'player') {
-        // Check if user already connected
-        const existingUser = session.connectedUsers.find(user => user.userId === userId);
-        if (!existingUser) {
-          session.playerCount++;
-          session.connectedUsers.push({ userId, role: 'player', joinedAt: new Date() });
+
+        // Add or update DM
+        const existingUserIndex = connectedUsers.findIndex(
+          (user) => user.userId === userId
+        );
+        const dmInfo = {
+          userId,
+          userName: userName || `DM_${userId.slice(-4)}`,
+          role: "dm",
+          joinedAt: new Date().toISOString(),
+        };
+
+        if (existingUserIndex >= 0) {
+          connectedUsers[existingUserIndex] = dmInfo;
+        } else {
+          connectedUsers.push(dmInfo);
+        }
+
+        dmUserId = userId;
+        dmName = dmInfo.userName;
+      } else if (role === "player") {
+        // Check if session has DM
+        if (!dmUserId) {
+          return res.status(200).json({
+            message: "Cannot join session without a DM present",
+            dmPresent: false,
+          });
+        }
+
+        // Add or update player
+        const existingUserIndex = connectedUsers.findIndex(
+          (user) => user.userId === userId
+        );
+        const playerInfo = {
+          userId,
+          userName: userName || `Player_${userId.slice(-4)}`,
+          role: "player",
+          joinedAt: new Date().toISOString(),
+        };
+
+        if (existingUserIndex >= 0) {
+          connectedUsers[existingUserIndex] = playerInfo;
+        } else {
+          connectedUsers.push(playerInfo);
         }
       }
-    } else if (action === 'leave') {
-      // Find and remove user
-      const userIndex = session.connectedUsers.findIndex(user => user.userId === userId);
+    } else if (action === "leave") {
+      // Remove user from connected users
+      const userIndex = connectedUsers.findIndex(
+        (user) => user.userId === userId
+      );
+
       if (userIndex !== -1) {
-        const user = session.connectedUsers[userIndex];
-        session.connectedUsers.splice(userIndex, 1);
-        
-        if (user.role === 'dm') {
-          session.dmPresent = false;
-          session.dmUserId = null;
-        } else if (user.role === 'player') {
-          session.playerCount = Math.max(0, session.playerCount - 1);
+        const user = connectedUsers[userIndex];
+        connectedUsers.splice(userIndex, 1);
+
+        // If DM is leaving, clear DM info
+        if (user.role === "dm" && dmUserId === userId) {
+          dmUserId = null;
+          dmName = null;
         }
       }
     }
 
-    // Update session
-    sessions.set(campaignId, session);
+    // Calculate player count (exclude DM)
+    const playerCount = connectedUsers.filter(
+      (user) => user.role === "player"
+    ).length;
 
+    // Update session in database
+    await createOrUpdateSession(campaignId, {
+      dm_user_id: dmUserId,
+      dm_name: dmName,
+      player_count: playerCount,
+      connected_users: connectedUsers,
+    });
+
+    // Return session info in the format expected by existing code
     res.status(200).json({
       success: true,
-      playerCount: session.playerCount,
-      dmPresent: session.dmPresent,
-      connectedUsers: session.connectedUsers.length,
-      timestamp: new Date().toISOString()
+      playerCount: playerCount,
+      dmPresent: !!dmUserId,
+      dmName: dmName,
+      connectedUsers: connectedUsers.length,
+      joinable: !!dmUserId,
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Session management error:', error);
+    console.error("Session management error:", error);
     res.status(500).json({
-      error: 'Failed to manage session',
-      details: error.message
+      error: "Failed to manage session",
+      details: error.message,
     });
   }
 }
